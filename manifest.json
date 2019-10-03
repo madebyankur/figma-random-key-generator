@@ -1,0 +1,7 @@
+{
+  "name": "Random Key Generator",
+  "id": "761525248810814854",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html"
+}
