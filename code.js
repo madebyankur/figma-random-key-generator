@@ -19,10 +19,19 @@ function generateDataKey(length) {
 }
 function generatePasswordKey(length) {
     let result = "";
-    const symbols = "`~!@#$%^&*()-_=+[{]}\|;:',<.>/?";
-    const symbolsLength = symbols.length;
+    const characters = "`~!@#$%^&*()-_=+[{]}\|;:',<.>/?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
     for (var i = 0; i < length; i++) {
-        result += symbols.charAt(Math.floor(Math.random() * symbolsLength));
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+function generateCertificateKey(length) {
+    let result = "";
+    const characters = "/+=_-\ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
 }
@@ -66,7 +75,15 @@ figma.ui.onmessage = (msg) => __awaiter(this, void 0, void 0, function* () {
         for (const n of isText) {
             yield figma.loadFontAsync(n.fontName);
             if (n.type === "TEXT" && n.characters) {
-                n.characters = generatePasswordKey(msg.value / 2) + generateDataKey(msg.value / 2);
+                n.characters = generatePasswordKey(msg.value);
+            }
+        }
+    }
+    else if (msg.type == "generate-certificate-key") {
+        for (const n of isText) {
+            yield figma.loadFontAsync(n.fontName);
+            if (n.type === "TEXT" && n.characters) {
+                n.characters = generateCertificateKey(msg.value);
             }
         }
     }
