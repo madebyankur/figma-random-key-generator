@@ -82,6 +82,19 @@
 
       <div class="divider"></div>
 
+      <div class="section-title">Random Address Key (MAC Address / Certificate Fingerprint)</div>
+      <div class="multiple-item-row">
+        <div class="label">Key Size</div>
+        <div class="input-icon">
+          <div class="input-icon__icon">
+            <div class="icon icon--hidden icon--black-3"></div>
+          </div>
+          <input type="number" class="input-icon__input" id="address-key" minlength="1" maxlength="100">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
       <div class="section-title">Random IP Address</div>
       <div class="label">Key Size</div>
       <div class="multiple-item-row">
@@ -114,6 +127,7 @@
         const dataKey = document.getElementById("data-key")
         const passwordKey = document.getElementById("password-key")
         const certificateKey = document.getElementById("certificate-key")
+        const addressKey = document.getElementById("address-key")
         const ipOneKey = document.getElementById("ip-one-key")
         const ipTwoKey = document.getElementById("ip-two-key")
         const ipThreeKey = document.getElementById("ip-three-key")
@@ -167,6 +181,24 @@
                   pluginMessage: {
                     type: "generate-certificate-key",
                     value: certificateKey.value
+                  }
+                },
+                "*"
+              )
+            }
+          }
+        }
+
+        addressKey.oninput = () => {
+          let confirmation = true
+
+          if (confirmation) {
+            if (addressKey.value >= 1 && addressKey.value <= 100) {
+              parent.postMessage(
+                {
+                  pluginMessage: {
+                    type: "generate-address-key",
+                    value: addressKey.value
                   }
                 },
                 "*"

@@ -35,6 +35,24 @@ function generateCertificateKey(length) {
     }
     return result;
 }
+function chunk(str, n) {
+    var value = [];
+    var i;
+    var len;
+    for (i = 0, len = str.length; i < len; i += n) {
+        value.push(str.substr(i, n));
+    }
+    return value;
+}
+function generateAddressKey(length) {
+    let result = "";
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
 function generateIPKey(length) {
     let result = "";
     const symbols = "0123456789";
@@ -84,6 +102,14 @@ figma.ui.onmessage = (msg) => __awaiter(this, void 0, void 0, function* () {
             yield figma.loadFontAsync(n.fontName);
             if (n.type === "TEXT" && n.characters) {
                 n.characters = generateCertificateKey(msg.value);
+            }
+        }
+    }
+    else if (msg.type == "generate-address-key") {
+        for (const n of isText) {
+            yield figma.loadFontAsync(n.fontName);
+            if (n.type === "TEXT" && n.characters) {
+                n.characters = chunk(generateAddressKey(msg.value), 2).join(':');
             }
         }
     }
