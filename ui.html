@@ -74,7 +74,7 @@
         <div class="label">Key Size</div>
         <div class="input-icon">
           <div class="input-icon__icon">
-            <div class="icon icon--hidden icon--black-3"></div>
+            <div class="icon icon--draft icon--black-3"></div>
           </div>
           <input type="number" class="input-icon__input" id="certificate-key" minlength="1" maxlength="100">
         </div>
@@ -87,7 +87,7 @@
         <div class="label">Key Size</div>
         <div class="input-icon">
           <div class="input-icon__icon">
-            <div class="icon icon--hidden icon--black-3"></div>
+            <div class="icon icon--list icon--black-3"></div>
           </div>
           <input type="number" class="input-icon__input" id="address-key" minlength="1" maxlength="100">
         </div>
@@ -119,9 +119,18 @@
 
       <div class="divider"></div>
 
-      <div>
-        <button class='button button--secondary' id="close">Close</button>
+      <div class="section-title">Random Numeric Key</div>
+      <div class="multiple-item-row">
+        <div class="label">Key Size</div>
+        <div class="input-icon">
+          <div class="input-icon__icon">
+            <div class="icon icon--timer icon--black-3"></div>
+            </div>
+          <input type="number" class="input-icon__input" id="numeric-key" minlength="1" maxlength="100">
+        </div>
       </div>
+
+      <div class="divider"></div>
 
       <script>
         const dataKey = document.getElementById("data-key")
@@ -133,7 +142,7 @@
         const ipThreeKey = document.getElementById("ip-three-key")
         const ipFourKey = document.getElementById("ip-four-key")
         const initialsKey = document.getElementById("initials-key")
-        let selection = []
+        const numericKey = document.getElementById("numeric-key")
 
         dataKey.oninput = () => {
           let confirmation = true
@@ -301,6 +310,24 @@
                   pluginMessage: {
                     type: "generate-initials-key",
                     value: initialsKey.value,
+                  }
+                },
+                "*"
+              )
+            }
+          }
+        }
+
+        numericKey.oninput = () => {
+          let confirmation = true
+
+          if (confirmation) {
+            if (numericKey.value >= 1 && numericKey.value <= 100) {
+              parent.postMessage(
+                {
+                  pluginMessage: {
+                    type: "generate-numeric-key",
+                    value: numericKey.value,
                   }
                 },
                 "*"
